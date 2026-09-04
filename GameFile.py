@@ -7,7 +7,7 @@ from OneStepPlayerFile import OneStepPlayer
 # from ABMinimaxPlayerFile import ABMinimaxPlayer
 from DSBoard import Board, Coord, Move, Possible_Moves_List, GAME_MODE_6, GAME_MODE_10, GAME_MODE_14
 import datetime
-from typing import Tuple, List
+from typing import Tuple, List, Optional
 
 import cv2
 
@@ -34,7 +34,7 @@ class Game:
         self.game_over = False
         self.stopwatch_start = datetime.datetime.now()
 
-    def play_game(self, player1: Player = None, player2: Player = None):
+    def play_game(self, player1: Optional[Player] = None, player2: Optional[Player] = None):
         """
         The main game loop, given a set of players.
         :param player1: A Player object. If one is not provided, then it will use a generic Player().
