@@ -85,7 +85,7 @@ class Game:
                                                                        which_player_am_I=self.current_player,
                                                                        get_expired_time_method=self.expired_time_in_s,
                                                                        opponents_move=previous_move)
-            # "click the stopwatch for (time spent, time remaining).
+            # click the stopwatch for (time spent, time remaining).
             expired = self.expired_time_in_s()
             if expired[1] < 0:
                 print(f"Player {PLAYER_CHARACTERS[self.current_player]} took too long to move: {expired[0]}.")
@@ -118,7 +118,6 @@ class Game:
 
             # record the move that was just made, so we can tell the next player about it.
             previous_move = move
-
 
     def handle_click(self, event: int, x: int, y: int, flags: int, param):
         """
