@@ -86,13 +86,14 @@ class Game:
                                                                        get_expired_time_method=self.expired_time_in_s,
                                                                        opponents_move=previous_move)
             # click the stopwatch for (time spent, time remaining).
-            expired = self.expired_time_in_s()
-            if expired[1] < 0:
-                print(f"Player {PLAYER_CHARACTERS[self.current_player]} took too long to move: {expired[0]}.")
+            elapsed_time, time_remaining = self.expired_time_in_s()
+
+            if time_remaining < 0:
+                print(f"Player {PLAYER_CHARACTERS[self.current_player]} took too long to move: {elapsed_time}.")
                 self.game_over = True
                 break
             print(f"Player {PLAYER_CHARACTERS[self.current_player]} chose to move to (x,y) = \
-                {move[0]} in {expired[0]} seconds.")
+                {move[0]} in {elapsed_time} seconds.")
 
             if move not in possible_moves[self.current_player]:
                 print("This is an illegal move.")
@@ -158,11 +159,12 @@ class Game:
             self.players[i].load_data(board=self.board,
                                       which_player_am_I=i,
                                       get_expired_time_method=self.expired_time_in_s)
-            if self.expired_time_in_s()[1] < 0:
+            elapsed_time, time_remaining = self.expired_time_in_s()
+            if time_remaining < 0:
                 print(f"Player {i} exceeded load time.")
                 self.game_over = True
                 return True
-            print(f"Player {i} loaded in {self.expired_time_in_s()} seconds.")
+            print(f"Player {i} loaded in {elapsed_time} seconds.")
         return False
 
     def restart_stopwatch(self):
