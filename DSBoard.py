@@ -155,6 +155,7 @@ class Board:
                 self.board_array[move_coord[0]][move_coord[1]] = player_code
                 return
 
+        # if neither end of the snake was the old_coord...
         raise Exception(f"Error! Could not make illegal move: {move} for player {which_player}\n"
                         f"{self.player_locations[which_player][0][0]=}\n"
                         f"{self.player_locations[which_player][1][0]=}\n"
