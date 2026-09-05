@@ -2,11 +2,11 @@ import numpy as np
 from copy import deepcopy
 import random
 import cv2
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 # define new types, "Coord," "Move," and "Possible_Moves_List," for type hinting
 Coord = Tuple[int, int]  # ideally two integers
-Move = Tuple[Coord, int]
+Move = Tuple[Coord, int]  # a starting coordinate and a direction index
 Possible_Moves_List = List[Move]
 
 PLAYER_0_CODE = -1
@@ -31,7 +31,7 @@ GAME_MODE_14 = 2
 
 
 class Board:
-    def __init__(self, board_size: int = 8, board_to_copy: "Board" = None, game_mode: int = GAME_MODE_10):
+    def __init__(self, board_size: int = 8, board_to_copy: Optional["Board"] = None, game_mode: int = GAME_MODE_10):
         """
         creates either an empty board that is boardSize x boardSize OR a duplicate of an existing board.
         :param board_size: an odd integer
@@ -49,6 +49,8 @@ class Board:
 
             self.cell_size = 30
             self.screen_size = (self.cell_size * board_size, self.cell_size * board_size, 3)
+            # start two snakes at center of board, on adjacent rows, facing <--> with one cell overlap.
+            #   Note: outer list is which player; inner list is which end of that snake; move is location & orientation.
             self.player_locations: List[List[Move]] = [[((int(board_size / 2) - 1, int(board_size / 2) - 1), 0),
                                                         ((int(board_size / 2) - 1, int(board_size / 2) - 2), 4)],
                                                        [((int(board_size / 2), int(board_size / 2)), 4),
@@ -72,10 +74,6 @@ class Board:
             self.cell_size = board_to_copy.cell_size
             self.player_locations = deepcopy(board_to_copy.player_locations)
             self.game_mode = board_to_copy.game_mode
-
-        # this is a dictionary of lists of the values stored in all possible runs, stored by length.
-        # DEPRECATED
-        # self.window_frames = {}
 
     def get_possible_moves(self, randomize: bool = False) -> List[Possible_Moves_List]:
         """
