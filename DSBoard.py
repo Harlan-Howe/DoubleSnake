@@ -11,6 +11,7 @@ Possible_Moves_List = List[Move]
 
 PLAYER_0_CODE = -1
 PLAYER_1_CODE = +1
+PLAYER_CODES = [PLAYER_0_CODE, PLAYER_1_CODE]
 PLAYER_CHIPS = ["o", "*"]
 PLAYER_CHARACTERS = ["O", "X"]
 
@@ -79,7 +80,8 @@ class Board:
         """
         determines a list of coordinates where the player is allowed to make a move.
         :param: whether to randomize the order of the resulting list.
-        :return: a list of [r,c] values where a player may legally move next.
+        :return: a list containing two Possible_Moves_List (of [r,c] values where a player may legally move next), one
+                 Possible_Moves_List for each player.
         """
 
         responses = []
