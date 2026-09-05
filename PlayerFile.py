@@ -2,7 +2,7 @@ import numpy as np
 from copy import deepcopy
 import random
 from DSBoard import Board, Coord, Move, Possible_Moves_List
-from typing import Tuple, List, Callable
+from typing import Tuple, List, Callable, Optional
 
 
 class Player:
@@ -14,15 +14,15 @@ class Player:
         pass
 
     def select_move(self, board: Board, which_player_am_I: int,
-                    get_expired_time_method:Callable,
-                    opponents_move: Move = None) -> Move:
+                    get_expired_time_method: Callable,
+                    opponents_move: Optional[Move] = None) -> Move:
         """
         given the state of the game, asks this player to pick a move, before time runs out.
         :param board: the current state of the board (a copy, as it turns out, so you can modify it.)
         :param which_player_am_I: Either 0 or 1
         :param get_expired_time_method: the method that can be called to determine how much time has expired and how
         much time remains. (These are returned as a list of two floats - units of seconds.)
-        :param opponents_move - the move your opponent just made, if any. (None if this is a first move)
+        :param opponents_move: - the move your opponent just made, if any. (None if this is a first move)
         :return: the coordinates of the move to be made, in (r, c) format.
         """
         # not used in this dopey class, but I think you'll find it handy in better ones.
@@ -46,7 +46,7 @@ class Player:
 
         # Note: this method doesn't need to do anything at all if you don't want it to. This is a spot to upload
         # "starting moves" if you desire. Nevertheless, it still has to take a maximum of the time per move to do it!
-        # Feel free to leave this method alone - it is just here as a option.
+        # Feel free to leave this method alone - it is just here as an option.
         print(f"Player {which_player_am_I} declines to preload data.")
         pass  # does nothing, for now.
 
