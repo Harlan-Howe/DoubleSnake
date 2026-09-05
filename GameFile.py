@@ -92,7 +92,7 @@ class Game:
                 self.game_over = True
                 break
             print(f"Player {PLAYER_CHARACTERS[self.current_player]} chose to move to (x,y) = \
-                {move} in {expired[0]} seconds.")
+                {move[0]} in {expired[0]} seconds.")
 
             if move not in possible_moves[self.current_player]:
                 print("This is an illegal move.")
