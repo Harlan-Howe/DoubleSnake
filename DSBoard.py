@@ -144,7 +144,7 @@ class Board:
 
         # where must we (allegedly) have come from?
         old_coord: Coord = (move_coord[0] + RELATIVE_MOVES[(move_direction + 4) % 8][0],
-                          move_coord[1] + RELATIVE_MOVES[(move_direction + 4) % 8][1])
+                            move_coord[1] + RELATIVE_MOVES[(move_direction + 4) % 8][1])
 
         # is the old_loc where one of the players' ends was?
         for which_end in range(2):  # consider both ends of this snake....
@@ -160,8 +160,6 @@ class Board:
                         f"{self.player_locations[which_player][0][0]=}\n"
                         f"{self.player_locations[which_player][1][0]=}\n"
                         f"{old_coord=}")
-
-
 
     def __str__(self):
         """
