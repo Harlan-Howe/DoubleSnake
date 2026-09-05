@@ -1,6 +1,6 @@
 from PlayerFile import Player
 from DSBoard import Board, Move, Possible_Moves_List, Coord
-from typing import Tuple, List, Callable
+from typing import Tuple, List, Callable, Optional
 import cv2
 import numpy as np
 
@@ -19,14 +19,13 @@ class HumanPlayer (Player):
                     board: Board,
                     which_player_am_I: int,
                     get_expired_time_method: Callable,
-                    opponents_move: Move = None) -> Move:
+                    opponents_move: Optional[Move] = None) -> Move:
         """
         given the state of the game, asks this player to pick a move, before time runs out.
         :param board: the current state of the board (a copy, as it turns out, so you can modify it.)
         :param which_player_am_I: Either 0 or 1
         :param get_expired_time_method: the method that can be called to determine how much time has expired and how
         much time remains. (These are returned as a list of two floats.)
-        :opponents_move
         :param opponents_move: the move that your opponent just made, in case that informs your decision
         :return: the coordinates of the move to be made, in (r, c) format.
         """
