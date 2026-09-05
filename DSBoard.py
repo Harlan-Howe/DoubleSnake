@@ -6,7 +6,7 @@ from typing import List, Tuple, Optional
 
 # define new types, "Coord," "Move," and "Possible_Moves_List," for type hinting
 Coord = Tuple[int, int]  # ideally two integers
-Move = Tuple[Coord, int]  # a starting coordinate and a direction index
+Move = Tuple[Coord, int]  # a destination coordinate and a direction index
 Possible_Moves_List = List[Move]
 
 PLAYER_0_CODE = -1
@@ -131,36 +131,36 @@ class Board:
         """
         Changes the state of this board so that the square at the selected move is set to which_player's code number,
         and the player position of which_player's end is updated to the move.
-        Note: Assumes that this move will be a legal one.
+        Note: raises exception if this is an illegal move.
         :param move: the (r,c) location where we should put a chip, and the direction (0-7) this move entails
         :param which_player: should we place PLAYER_0_CODE or PLAYER_1_CODE here? (0 or 1 values accepted.)
         :return: None
          NOTE: THIS METHOD ALTERS self.board
         """
-        if which_player == 0:
-            player_code = PLAYER_0_CODE
-        else:
-            player_code = PLAYER_1_CODE
+        player_code = PLAYER_CODES[which_player]
 
-        move_coord: Coord = move[0]
-        move_direction: int = move[1]
-        self.board_array[move_coord[0]][move_coord[1]] = player_code
-        # where must we have come from?
-        old_loc: Coord = (move_coord[0] + RELATIVE_MOVES[(move_direction + 4) % 8][0],
+        # identify the destination location and direction from the given move.
+        move_coord, move_direction = move
+
+        # where must we (allegedly) have come from?
+        old_coord: Coord = (move_coord[0] + RELATIVE_MOVES[(move_direction + 4) % 8][0],
                           move_coord[1] + RELATIVE_MOVES[(move_direction + 4) % 8][1])
 
-        made_move = False
+        # is the old_loc where one of the players' ends was?
         for which_end in range(2):  # consider both ends of this snake....
-            if self.player_locations[which_player][which_end][0] == old_loc:
+            if self.player_locations[which_player][which_end][0] == old_coord:
+                # update the list of this player's end locations
                 self.player_locations[which_player][which_end] = move
-                made_move = True
-                break
+                # update the destination with the player's code.
+                self.board_array[move_coord[0]][move_coord[1]] = player_code
+                return
 
-        if not made_move:
-            print(f"Error! Could not make illegal move: {move} for player {which_player}")
-            print(f"{self.player_locations[which_player][0][0]=}")
-            print(f"{self.player_locations[which_player][1][0]=}")
-            print(f"{old_loc=}")
+        raise Exception(f"Error! Could not make illegal move: {move} for player {which_player}\n"
+                        f"{self.player_locations[which_player][0][0]=}\n"
+                        f"{self.player_locations[which_player][1][0]=}\n"
+                        f"{old_coord=}")
+
+
 
     def __str__(self):
         """
@@ -242,8 +242,8 @@ class Board:
     def get_move_loc_for_click_loc(self, loc: Tuple[int, int]) -> Coord:
         """
         convert the (x,y) click on the screen to a corresponding (r,c) of which space was chosen.
-        :param loc:
-        :return:
+        :param loc: (x, y) pixel location of the click
+        :return: (r, c) coordinates of which cell contains these pixels.
         """
         r = int(loc[1]/self.cell_size)
         c = int(loc[0]/self.cell_size)
