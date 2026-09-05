@@ -6,7 +6,7 @@ from DSBoard import Board, Move
 
 class OneStepPlayer(Player):
     """
-    A short-sighted player - it picks the move that will maximize the number of runs and/or captures this ply.
+    A short-sighted player - it picks the move that will maximize the number of remaining available moves.
     """
     def __init__(self):
         super().__init__()
@@ -56,6 +56,7 @@ class OneStepPlayer(Player):
         board_copy = Board(board_to_copy=board)
         board_copy.make_move_for_player(move, which_player)
 
+        # return the score for this new, proposed board arrangement.
         return self.score_for_board(board_copy, which_player_am_I=which_player)
 
     def score_for_board(self,
