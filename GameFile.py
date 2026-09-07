@@ -206,7 +206,8 @@ if __name__ == '__main__':
     cv2.putText(game_over_window, "Game Over", (10, 45),
                 cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0))
     cv2.imshow("Game Over", game_over_window)
-    cv2.moveWindow("Game Over", 0, the_game.board.screen_size[0] + 0)
+    cv2.moveWindow("Game Over", 0, the_game.board.screen_size[0] + 40)
+
 
     # the game is over... display the board, but encourage the user to click once more to quit.
     if DISPLAY_BOARD_AS_GRAPHICS:
