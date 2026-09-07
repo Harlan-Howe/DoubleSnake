@@ -3,7 +3,7 @@ import numpy as np
 from PlayerFile import Player
 from HumanPlayerFile import HumanPlayer
 from OneStepPlayerFile import OneStepPlayer
-# from MinimaxPlayerFile import MinimaxPlayer
+from MinimaxPlayerFile import MinimaxPlayer
 # from ABMinimaxPlayerFile import ABMinimaxPlayer
 from DSBoard import Board, Coord, Move, Possible_Moves_List, GAME_MODE_6, GAME_MODE_10, GAME_MODE_14
 import datetime
@@ -199,10 +199,10 @@ class Game:
 if __name__ == '__main__':
     # create a Game and start it running
     the_game = Game(board_size=8, time_per_move=15, game_mode=GAME_MODE_6)
-    the_game.play_game(HumanPlayer(), Player())
+    the_game.play_game(HumanPlayer(), MinimaxPlayer())
 
     # Display a "game over" window. Comment this out if you wish to loop over many games.
-    game_over_window = np.ones((50, 200, 3), dtype=float)
+    game_over_window = np.ones((50, 200, 3), dtype=np.uint8)*255
     cv2.putText(game_over_window, "Game Over", (10, 45),
                 cv2.FONT_HERSHEY_COMPLEX, 1, (0, 0, 0))
     cv2.imshow("Game Over", game_over_window)
