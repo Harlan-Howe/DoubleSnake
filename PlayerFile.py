@@ -57,5 +57,7 @@ class Player:
         """
         return False
 
-    def score_for_board(self, board: Board, which_player_am_I: int = 0) -> int:
+    def score_for_board(self,
+                        board: Board, which_player_am_I: int = 0,
+                        possible_moves_list:Optional[Possible_Moves_List] = None) -> int:
         return 1  # not really used in the base Player class.

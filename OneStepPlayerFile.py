@@ -1,7 +1,7 @@
 from typing import Callable, Optional, List
 
 from PlayerFile import Player
-from DSBoard import Board, Move
+from DSBoard import Board, Move, Possible_Moves_List
 
 
 class OneStepPlayer(Player):
@@ -60,14 +60,18 @@ class OneStepPlayer(Player):
         return self.score_for_board(board_copy, which_player_am_I=which_player)
 
     def score_for_board(self,
-                        board: Board,
-                        which_player_am_I: int = 0) -> int:
+                        board: Board, which_player_am_I: int = 0,
+                        possible_moves_list: Optional[Possible_Moves_List] = None) -> int:
         """
         bases the score on the number of possible moves this player has remaining.
         :param board:
         :param which_player_am_I:
+        :param possible_moves_list: the list of possible moves for this board. If None, this method will call the method
+               to find it, but if you already have it, it will be faster to pass it than regenerate it.
         :return:
         """
-        score = len(board.get_possible_moves()[which_player_am_I])
+        if possible_moves_list is None:
+            possible_moves_list = board.get_possible_moves()
+        score = len(possible_moves_list[which_player_am_I])
 
         return score
