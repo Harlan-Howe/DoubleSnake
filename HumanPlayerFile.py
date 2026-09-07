@@ -43,7 +43,7 @@ class HumanPlayer (Player):
                     cv2.destroyWindow("Player Time")
                     return best_move
                 cv2.waitKey(10)
-                my_window = np.ones((50, 200, 3), dtype=np.uint8)*255
+                my_window = np.ones((100, 200, 3), dtype=np.uint8)*255
                 if get_expired_time_method()[1] < 10 and int(2*get_expired_time_method()[1]) % 2 == 0:
                     my_window[:, :, 0] = 0
                     my_window[:, :, 1] = 0.5
@@ -54,6 +54,18 @@ class HumanPlayer (Player):
                             fontScale=1,
                             color=(0.0, 0.0, 0.0)
                             )
+                cv2.putText(img=my_window,
+                            text="Double click!",
+                            org=(10,65),
+                            fontFace=cv2.FONT_HERSHEY_COMPLEX,
+                            fontScale=0.8,
+                            color=(128,0,0))
+                cv2.putText(img=my_window,
+                            text=f"Player {which_player_am_I}",
+                            org=(10, 85),
+                            fontFace=cv2.FONT_HERSHEY_COMPLEX,
+                            fontScale=0.8,
+                            color=(0, 128, 0))
 
                 cv2.imshow("Player Time", my_window)
                 cv2.moveWindow("Player Time", 0, board.screen_size[0]+40)
