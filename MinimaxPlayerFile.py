@@ -1,4 +1,4 @@
-from typing import Callable, Optional, List, override
+from typing import Callable, Optional, List, override, Tuple
 
 from DSBoard import Board, Move, Possible_Moves_List
 from PlayerFile import Player
@@ -24,15 +24,31 @@ class MinimaxPlayer(Player):
         :param opponents_move: - the move your opponent just made, if any. (None if this is a first move)
         :return: the coordinates of the move to be made, in (r, c) format.
         """
-        # not used in this dopey class, but I think you'll find it handy in better ones.
+
+        # Here are three variable I think you might find handy...
         other_player = 1 - which_player_am_I
-
         potential_moves: List[Possible_Moves_List] = board.get_possible_moves(randomize=True)
+        expired_time, remaining_time = get_expired_time_method() # tells the time NOW ... you may want to move this.
 
-        # not used in this class either, but likely to be useful in better ones.
-        expired_time, remaining_time = get_expired_time_method()
+        return potential_moves[which_player_am_I][0]  # replace this with the move you actually want.
 
-        return potential_moves[which_player_am_I][0]  # return the first move on the list for this player.
+    def maximize_score(self,
+                       board:Board,
+                       which_player_am_I: int,
+                       get_expired_time_method: Callable,
+                       depth_to_go: int) -> Tuple[Move, int]:
+        """
+        selects the optimal move for this player to make, (i.e., the one yielding the highest score) looking
+        "depth_to_go" plies ahead and assuming both players are picking moves as wisely as possible. In the case of a
+        tie, picks between equivalent options randomly..
+        :param board: the state of the board at the moment.
+        :param which_player_am_I: 0 or 1... this is the player doing the asking.
+        :param get_expired_time_method: a method to determine whether you need to bail out early and return.
+        :param depth_to_go: number of steps to look ahead. If this is 0, return now.
+        :return: the best move and the optimal score that goes with it, if both player are picking moves wisely..
+        """
+        pass
+
 
     @override
     def load_data(self, board, which_player_am_I, get_expired_time_method):
