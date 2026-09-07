@@ -57,6 +57,16 @@ class MinimaxPlayer(Player):
         :return: boolean
         """
         return False
+
     @override
     def score_for_board(self, board: Board, which_player_am_I: int = 0) -> int:
-        return 1  # not really used in the base Player class.
+        """
+        returns the number of available moves for this player, minus the number available to the opponent.
+        NOTE: This is the prototype scoring method. You may wish to write something better.
+        :param board: the board under consideration
+        :param which_player_am_I: the number (0 or 1) of the player who is asking.
+        :return: the score.
+        """
+        potential_moves: List[Possible_Moves_List] = board.get_possible_moves(randomize=False)
+        opponent = 1 - which_player_am_I
+        return len(potential_moves[which_player_am_I]) - len(potential_moves[opponent])
