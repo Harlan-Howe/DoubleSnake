@@ -199,7 +199,7 @@ class Game:
 if __name__ == '__main__':
     # create a Game and start it running
     the_game = Game(board_size=8, time_per_move=15, game_mode=GAME_MODE_6)
-    the_game.play_game(HumanPlayer(), MinimaxPlayer())
+    the_game.play_game(HumanPlayer(), MinimaxPlayer(max_depth = 4))
 
     # Display a "game over" window. Comment this out if you wish to loop over many games.
     game_over_window = np.ones((50, 200, 3), dtype=np.uint8)*255
