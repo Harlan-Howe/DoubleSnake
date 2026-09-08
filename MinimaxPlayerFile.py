@@ -2,6 +2,7 @@ from typing import Callable, Optional, List, override, Tuple
 
 from DSBoard import Board, Move, Possible_Moves_List
 from PlayerFile import Player
+import logging
 
 class MinimaxPlayer(Player):
     """
@@ -11,6 +12,7 @@ class MinimaxPlayer(Player):
     def __init__(self, max_depth:int = 3):
         super().__init__()
         self.max_depth = max_depth
+        logging.info(f"Created MinimaxPlayer with {max_depth=}.")
 
     @override
     def select_move(self, board: Board, which_player_am_I: int,
@@ -25,6 +27,7 @@ class MinimaxPlayer(Player):
         :param opponents_move: - the move your opponent just made, if any. (None if this is a first move)
         :return: the coordinates of the move to be made, in (r, c) format.
         """
+        logging.debug("Calling minimax select_move().")
 
         # Here are three variable I think you might find handy...
         other_player = 1 - which_player_am_I
