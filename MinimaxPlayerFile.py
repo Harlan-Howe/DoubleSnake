@@ -8,8 +8,9 @@ class MinimaxPlayer(Player):
     a "smart" (?) Player that looks several steps ahead
     """
 
-    def __init__(self):
+    def __init__(self, max_depth:int = 3):
         super().__init__()
+        self.max_depth = max_depth
 
     @override
     def select_move(self, board: Board, which_player_am_I: int,
