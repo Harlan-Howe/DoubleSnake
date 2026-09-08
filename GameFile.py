@@ -8,8 +8,13 @@ from MinimaxPlayerFile import MinimaxPlayer
 from DSBoard import Board, Coord, Move, Possible_Moves_List, GAME_MODE_6, GAME_MODE_10, GAME_MODE_14
 import datetime
 from typing import Tuple, List, Optional
+import logging
 
 import cv2
+
+# Pick ONE of the following:
+logging.basicConfig(level=logging.ERROR)  # log to console
+# logging.basicConfig(level=logging.INFO, filename=f"game @ {datetime.datetime.now():%m-%d@%H:%M:%S}.txt ")
 
 PLAYER_CHARACTERS = ["O", "X"]
 
@@ -62,7 +67,7 @@ class Game:
                 while self.current_player == WAITING_FOR_FIRST_CLICK:
                     cv2.waitKey(1)
                 self.current_player = 0
-            print("Starting game.")
+            logging.info("Starting game.")
 
         self.game_over = False
 
@@ -136,14 +141,14 @@ class Game:
         if self.game_over:
             return
         if event == cv2.EVENT_LBUTTONUP:  # only worry about when the mouse is released inside this window.
-            print("handling a click.")
+            logging.info("handling a click.")
             if self.current_player == WAITING_FOR_FIRST_CLICK:
-                print("first click.")
+                logging.debug("first click.")
                 self.current_player = 0
                 return
 
             if self.players[self.current_player].is_human():
-                print(f"Click for player {self.current_player} at ({x}, {y}).")
+                logging.debug(f"Click for player {self.current_player} at ({x}, {y}).")
                 self.players[self.current_player].handle_click_at_xy_point((x, y))
                 return
 
@@ -155,7 +160,7 @@ class Game:
         """
         for i in range(2):
             self.restart_stopwatch()
-            print(f"Player {i} loading data.")
+            logging.info(f"Player {i} loading data.")
             self.players[i].load_data(board=self.board,
                                       which_player_am_I=i,
                                       get_expired_time_method=self.expired_time_in_s)
@@ -164,7 +169,7 @@ class Game:
                 print(f"Player {i} exceeded load time.")
                 self.game_over = True
                 return True
-            print(f"Player {i} loaded in {elapsed_time} seconds.")
+            logging.info(f"Player {i} loaded in {elapsed_time} seconds.")
         return False
 
     def restart_stopwatch(self):
