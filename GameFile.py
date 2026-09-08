@@ -13,7 +13,7 @@ import logging
 import cv2
 
 # Pick ONE of the following:
-logging.basicConfig(level=logging.ERROR)  # log to console
+logging.basicConfig(level=logging.INFO)  # log to console
 # logging.basicConfig(level=logging.INFO, filename=f"game @ {datetime.datetime.now():%m-%d@%H:%M:%S}.txt ")
 
 PLAYER_CHARACTERS = ["O", "X"]
